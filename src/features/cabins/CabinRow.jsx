@@ -1,11 +1,12 @@
 import styled from "styled-components";
 import { formatCurrency } from "../../utils/helpers";
-import { useMutation } from "@tanstack/react-query";
-import { deleteCabin } from "../../services/apiCabins";
-import { useQueryClient } from "@tanstack/react-query";
-import toast from "react-hot-toast";
+//import { useMutation } from "@tanstack/react-query";
+//import { deleteCabin } from "../../services/apiCabins";
+//import { useQueryClient } from "@tanstack/react-query";
+//import toast from "react-hot-toast";
 import { useState } from "react";
 import CreateCabinForm from "./CreateCabinForm";
+import { useDeleteCabin } from "./useDeleteCabin";
 //import { Button } from "../../ui/Button";
 
 const TableRow = styled.div`
@@ -49,6 +50,7 @@ const Discount = styled.div`
 
 function CabinRow({ cabin }) {
   const [showForm, setShowForm] = useState(false);
+  const { isDeleting, deleteCabin } = useDeleteCabin();
   const {
     id: cabinId,
     name,
@@ -57,22 +59,22 @@ function CabinRow({ cabin }) {
     discount,
     image,
   } = cabin;
-  const queryClient = useQueryClient();
+  // const queryClient = useQueryClient();
 
-  const { isLoading: isDeleting, mutate: deleteCabinMutation } = useMutation({
-    mutationFn: (cabinId) => deleteCabin(cabinId),
-    onSuccess: () => {
-      // Invalidate and refetch
-      //// alert("Cabin deleted successfully!");
-      toast.success("Cabin deleted successfully!");
-      queryClient.invalidateQueries({ queryKey: ["cabins"] });
-    },
-    onError: (error) => {
-      console.error("Error deleting cabin:", error);
-      toast.error("Failed to delete cabin. Please try again.", error.message);
-      //alert("Failed to delete cabin. Please try again.", error.message);
-    },
-  });
+  // const { isLoading: isDeleting, mutate: deleteCabinMutation } = useMutation({
+  //   mutationFn: (cabinId) => deleteCabin(cabinId),
+  //   onSuccess: () => {
+  //     // Invalidate and refetch
+  //     //// alert("Cabin deleted successfully!");
+  //     toast.success("Cabin deleted successfully!");
+  //     queryClient.invalidateQueries({ queryKey: ["cabins"] });
+  //   },
+  //   onError: (error) => {
+  //     console.error("Error deleting cabin:", error);
+  //     toast.error("Failed to delete cabin. Please try again.", error.message);
+  //     //alert("Failed to delete cabin. Please try again.", error.message);
+  //   },
+  // });
 
   return (
     <>
@@ -81,11 +83,16 @@ function CabinRow({ cabin }) {
         <Cabin>{name}</Cabin>
         <div>Fits upto {maxCapacity} guests</div>
         <Price>{formatCurrency(regularPrice)}</Price>
-        <Discount>{formatCurrency(discount)}</Discount>
+        {discount ? (
+          <Discount>{formatCurrency(discount)}</Discount>
+        ) : (
+          <span>&mdash;</span>
+        )}
         <div>
           <button onClick={() => setShowForm((show) => !show)}>Edit</button>
           <button
-            onClick={() => deleteCabinMutation(cabinId)}
+            //onClick={() => deleteCabinMutation(cabinId)}
+            onClick={() => deleteCabin(cabinId)}
             disabled={isDeleting}
           >
             {isDeleting ? "Deleting..." : "Delete"}
