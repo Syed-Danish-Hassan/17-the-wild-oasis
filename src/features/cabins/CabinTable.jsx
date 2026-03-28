@@ -56,9 +56,14 @@ function CabinTable() {
         <div>Discount </div>
         <div></div>
       </Table.Header>
-      {cabins.map((cabin) => (
+      <Table.Body
+        data={cabins}
+        render={(cabin) => <CabinRow key={cabin.id} cabin={cabin} />}
+      />
+
+      {/* {cabins.map((cabin) => (
         <CabinRow key={cabin.id} cabin={cabin} />
-      ))}
+      ))} */}
     </Table>
   );
 }
