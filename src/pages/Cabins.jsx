@@ -4,6 +4,7 @@ import Row from "../ui/Row";
 //import { useEffect } from "react";
 import CabinTable from "../features/cabins/CabinTable";
 import AddCabin from "../features/cabins/AddCabin";
+import CabinTableOperations from "../features/cabins/CabinTableOperations";
 //import Button from "../ui/Button";
 //import { useState } from "react";
 //import CreateCabinForm from "../features/cabins/CreateCabinForm";
@@ -18,7 +19,8 @@ function Cabins() {
     <>
       <Row type="horizontal">
         <Heading as="h1">All cabins</Heading>
-        <p>Filter / Sort</p>
+        <CabinTableOperations />
+        {/* <p>Filter / Sort</p> */}
         {/* <img
         src="https://wpbxrrxxrqjfshwaytew.supabase.co/storage/v1/object/public/cabin-images/cabin-001.jpg"
         alt="Cabin"

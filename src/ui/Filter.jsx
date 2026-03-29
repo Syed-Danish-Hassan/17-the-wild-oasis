@@ -1,4 +1,7 @@
+import { useSearchParams } from "react-router-dom";
 import styled, { css } from "styled-components";
+import { useCabins } from "../features/cabins/useCabins";
+import Spinner from "./Spinner";
 
 const StyledFilter = styled.div`
   border: 1px solid var(--color-grey-100);
@@ -33,3 +36,36 @@ const FilterButton = styled.button`
     color: var(--color-brand-50);
   }
 `;
+
+function Filter({ filteredField, options }) {
+  const { isLoading, cabins } = useCabins();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const currentFilter = searchParams.get(filteredField) || options.at(0).value;
+
+  if (isLoading) {
+    return <Spinner />;
+  }
+
+  function handleClick(value) {
+    searchParams.set(filteredField, value);
+    setSearchParams(searchParams);
+  }
+  return (
+    <StyledFilter>
+      {options.map((option) => (
+        <FilterButton
+          key={option.value}
+          active={currentFilter === option.value}
+          onClick={() => handleClick(option.value)}
+        >
+          {option.label}
+        </FilterButton>
+      ))}
+    </StyledFilter>
+  );
+}
+//   </StyledFilter>
+// );
+//}
+
+export default Filter;
