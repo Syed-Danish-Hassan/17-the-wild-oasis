@@ -12,7 +12,8 @@ const StyledTable = styled.div`
 
 const CommonRow = styled.div`
   display: grid;
-  grid-template-columns: ${(props) => props.columns};
+  ////here $ is used for resolving transient prop isue in styled components
+  grid-template-columns: ${(props) => props.$columns};
   column-gap: 2.4rem;
   align-items: center;
   transition: none;
@@ -72,7 +73,8 @@ function Table({ columns, children }) {
 function Header({ children }) {
   const { columns } = useContext(TableContext);
   return (
-    <StyledHeader role="row" columns={columns} as="header">
+    ////here $ is used for resolving transient prop isue in styled components
+    <StyledHeader role="row" $columns={columns} as="header">
       {children}
     </StyledHeader>
   );
@@ -80,7 +82,8 @@ function Header({ children }) {
 function Row({ children }) {
   const { columns } = useContext(TableContext);
   return (
-    <StyledRow role="row" columns={columns}>
+    ////here $ is used for resolving transient prop isue in styled components
+    <StyledRow role="row" $columns={columns}>
       {children}
     </StyledRow>
   );

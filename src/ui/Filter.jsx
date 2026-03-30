@@ -38,9 +38,9 @@ const FilterButton = styled.button`
 `;
 
 function Filter({ filteredField, options }) {
-  const { isLoading, cabins } = useCabins();
+  const { isLoading } = useCabins();
   const [searchParams, setSearchParams] = useSearchParams();
-  const currentFilter = searchParams.get(filteredField) || options.at(0).value;
+  const currentFilter = searchParams.get(filteredField) || "";
 
   if (isLoading) {
     return <Spinner />;
@@ -55,7 +55,8 @@ function Filter({ filteredField, options }) {
       {options.map((option) => (
         <FilterButton
           key={option.value}
-          active={currentFilter === option.value}
+          $active={currentFilter === option.value ? true : false}
+          $disabled={currentFilter === option.value ? true : false}
           onClick={() => handleClick(option.value)}
         >
           {option.label}
