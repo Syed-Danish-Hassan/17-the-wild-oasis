@@ -5,7 +5,7 @@ import SortBy from "../../ui/SortBy";
 
 function CabinTableOperations() {
   return (
-    {/* <TableOperations> component is style component i.e. it will be use for styling*/}
+    /* <TableOperations> component is style component i.e. it will be use for styling*/
     <TableOperations>
       <Filter
         filteredField="discount"
